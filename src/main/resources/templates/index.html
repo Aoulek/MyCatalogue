@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<head>
+<meta charset="utf-8">
+<title>Products</title>
+<link rel="stylesheet"
+href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script
+>
+</head>
+<body>
+<div class="container mt-5">
+<div class="card">
+ <div class="card-header">Liste de produits</div>
+ <div class="card-body">
+
+ <form th:action="@{products}" method="">
+ <div class="mb-3">
+ <label classs="control-label" >Mot Clé:</label>
+ <input type="text" name="motCle" th:value="${motCle}" class="p-1" />
+ <button class="btn btn-primary">Chercher</button>
+ </div>
+
+ </form>
+ <table class="table">
+ <tr>
+ <th>ID</th><th>DESCRIPTION</th><th>Prix</th><th>Quantité</th>
+ </tr>
+ <tr th:each="p:${pageProduits.content}">
+ <td th:text="${p.id}"></td>
+ <td th:text="${p.designation}"></td>
+ <td th:text="${p.prix}"></td>
+ <td th:text="${p.quantite}"></td>
+ <td> <a onclick="javascript:return confirm('Etes vous sur de vouloir supprimer ?')" class="btn btn-danger" th:href="@{deleteProduit(id=${p.id},page=${currentPage},size=${size}, motCle=${motCle})}">Delete</a></td>
+ </tr>
+
+ </table>
+ <ul class="nav nav-pills">
+ <li th:each="page,status:${pages}">
+ <a th:class="${status.index==currentPage?'btn btn-primary':'btn'}"
+class="btn"
+th:href="@{products(page=${status.index},size=${size},motCle=${motCle})}"
+ th:text="${status.index}"></a>
+
+ </li>
+ </ul>
+
+ </div>
+</div>
+</div>
+</body>
+</html>
